@@ -1,0 +1,79 @@
+================================================================================
+QUICK REFERENCE: Commands to Run (Copy & Paste)
+================================================================================
+
+STEP 1: INSTALL (Run in R Console)
+================================================================================
+
+install.packages(c("tidyverse", "stargazer", "broom", "knitr"))
+
+Wait for installation to complete (2-5 minutes).
+
+
+STEP 2: RENDER FILES (Run in Terminal/Command Prompt)
+================================================================================
+
+Navigate to your folder first:
+cd /path/to/your/regression_presentation
+
+Then render:
+quarto render handout.qmd
+quarto render presentation.qmd
+
+Wait ~30 seconds for each to complete.
+
+
+STEP 3: CHECK OUTPUT
+================================================================================
+
+You should now see these new files in your folder:
+- handout.pdf
+- handout.html
+- presentation.pdf
+- presentation.html
+
+
+STEP 4: UPLOAD TO GITHUB
+================================================================================
+
+1. Go to https://github.com/
+2. Create repo: "regression-presentation" (PUBLIC)
+3. Click "Upload files"
+4. Drag all 8 files into the upload box
+5. Commit
+
+
+STEP 5: GET YOUR GITHUB URL
+================================================================================
+
+Copy from your browser address bar:
+https://github.com/YOUR_USERNAME/regression-presentation
+
+
+STEP 6: SUBMIT TO ILIAS
+================================================================================
+
+Upload:
+- handout.qmd
+- handout.pdf
+- handout.html
+- presentation.qmd
+- presentation.pdf
+- presentation.html
+- references.bib
+- exercise.R
+
+Also paste:
+GitHub URL: https://github.com/YOUR_USERNAME/regression-presentation
+
+
+================================================================================
+THAT'S IT. YOU'RE DONE.
+================================================================================
+
+Timeline:
+- June 1 (TODAY): Do steps 1-6
+- June 2-15: Practice once, optional edits
+- June 16: Present
+
+Questions? Everything is already written for you. Just follow the steps.
