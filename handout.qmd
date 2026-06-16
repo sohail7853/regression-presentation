@@ -2,9 +2,11 @@
 title: "Presenting Regression Results Using R"
 author: "Mohammed"
 date: "`r format(Sys.time(), '%d %B %Y')`"
-format: pdf
+format:
+ html: default
+ pdf: default
 bibliography: references.bib
-
+csl: apa.csl
 ---
 
 # Introduction
