@@ -4,7 +4,7 @@ author: "Mohammed"
 date: "`r format(Sys.time(), '%d %B %Y')`"
 format: pdf
 bibliography: references.bib
-csl: apa.csl
+
 ---
 
 # Introduction
