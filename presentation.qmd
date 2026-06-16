@@ -188,10 +188,11 @@ stargazer(
 - Confidence intervals become visual — easy to judge significance
 - Works for papers, reports, and presentations
 
-## The Plot
+## The Code
 
 ```{r}
 #| echo: true
+#| eval: false
 #| message: false
 #| fig-height: 3.5
 
@@ -206,7 +207,6 @@ ggplot(results, aes(y = term, x = estimate)) +
   labs(x = "Coefficient Estimate", y = NULL,
        caption = "Error bars = 95% CI. Dashed line = zero effect.") +
   theme_minimal(base_size = 14)
-```
 
 # Part 5: Prediction Tables {background-color="#34495E"}
 

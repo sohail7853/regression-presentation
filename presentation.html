@@ -505,7 +505,7 @@ Model 1 Model 2<br>
 <td style="text-align: left;">- Audiences can immediately see <strong>direction</strong> and <strong>magnitude</strong> - Confidence intervals become visual — easy to judge significance - Works for papers, reports, and presentations</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">## The Plot</td>
+<td style="text-align: left;">## The Code</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">::: {.cell}</td>
@@ -514,132 +514,129 @@ Model 1 Model 2<br>
 <td style="text-align: left;">```{.r .cell-code} results &lt;- tidy(model1, conf.int = TRUE) %&gt;% filter(term != “(Intercept)”) %&gt;% mutate(term = recode(term, “wt” = “Weight (1000 lbs)”, “cyl” = “Cylinders”))</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">ggplot(results, aes(y = term, x = estimate)) + geom_point(size = 3, color = “#2C3E50”) + geom_errorbar(aes(xmin = conf.low, xmax = conf.high), width = 0.2, color = “#2C3E50”) + geom_vline(xintercept = 0, linetype = “dashed”, color = “#E74C3C”) + labs(x = “Coefficient Estimate”, y = NULL, caption = “Error bars = 95% CI. Dashed line = zero effect.”) + theme_minimal(base_size = 14) ```</td>
+<td style="text-align: left;">ggplot(results, aes(y = term, x = estimate)) + geom_point(size = 3, color = “#2C3E50”) + geom_errorbar(aes(xmin = conf.low, xmax = conf.high), width = 0.2, color = “#2C3E50”) + geom_vline(xintercept = 0, linetype = “dashed”, color = “#E74C3C”) + labs(x = “Coefficient Estimate”, y = NULL, caption = “Error bars = 95% CI. Dashed line = zero effect.”) + theme_minimal(base_size = 14)</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">::: {.cell-output-display} <img data-src="presentation_files/figure-revealjs/unnamed-chunk-4-1.png" width="960"> ::: :::</td>
-</tr>
-<tr class="odd">
 <td style="text-align: left;"># Part 5: Prediction Tables {background-color=“#34495E”}</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">## Translating Results to Decisions</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">Prediction tables answer: <strong>“What does the model predict for specific scenarios?”</strong></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">Useful for: - Business presentations - Policy recommendations - Communicating to non-statisticians</td>
 </tr>
-<tr class="odd">
-<td style="text-align: left;">## Building a Prediction Table</td>
-</tr>
 <tr class="even">
+<td style="text-align: left;">## Building a Prediction Table ``` :::</td>
+</tr>
+<tr class="odd">
 <td style="text-align: left;">::: {.cell html-math-method=‘plain’}</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">```{.r .cell-code} scenarios &lt;- tibble(wt = c(2.0, 2.5, 3.0, 3.5, 4.0), cyl = 6) pred_out &lt;- predict(model1, newdata = scenarios, se.fit = TRUE)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">scenarios %&gt;% mutate( <code>Predicted MPG</code> = round(pred_out<span class="math inline">\(fit, 1),
 `95% CI`        = paste0(
 "[", round(pred_out\)</span>fit - 1.96 * pred_out<span class="math inline">\(se.fit, 1),
 ", ", round(pred_out\)</span>fit + 1.96 * pred_out$se.fit, 1), “]” ) ) %&gt;% rename(<code>Weight (1000 lbs)</code> = wt, Cylinders = cyl) %&gt;% knitr::kable() ```</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">::: {.cell-output-display}</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">| Weight (1000 lbs)| Cylinders| Predicted MPG|95% CI | |—————–:|———:|————-:|:————| | 2.0| 6| 24.3|[22.3, 26.2] | | 2.5| 6| 22.7|[21.4, 24] | | 3.0| 6| 21.1|[20.1, 22] | | 3.5| 6| 19.5|[18.4, 20.5] | | 4.0| 6| 17.9|[16.3, 19.4] |</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">::: :::</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;"># Part 6: APA Reporting {background-color=“#34495E”}</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">## Writing Up Results in Text</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">&gt; A multiple linear regression was conducted predicting fuel efficiency from vehicle weight and cylinder count. The model was significant, <em>F</em>(2, 29) = 69.03, <em>p</em> &lt; .001, <em>R</em>² = .83. Vehicle weight was a significant negative predictor (<span class="math inline">\(\hat{\beta}\)</span> = -3.19, <em>SE</em> = 0.74, <em>t</em>(29) = -4.32, <em>p</em> &lt; .001, 95% CI [-4.69, -1.69]).</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">## APA Formatting Quick Reference</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">| Do this | Not this | |—|—| | <em>p</em> = .041 | p &lt; 0.05 | | <em>R</em>² = .83 | R2 = 0.83 | | 95% CI [2.1, 4.3] | CI: 2.1-4.3 | | <em>F</em>(2, 29) = 69.03 | F = 69 | | <em>M</em> = 20.09, <em>SD</em> = 6.03 | Mean = 20 |</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;"># Part 7: Check Assumptions {background-color=“#34495E”}</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">## Before You Report: Diagnostics</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">::: {.cell}</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;"><code>{.r .cell-code} par(mfrow = c(1, 2)) plot(model1, which = c(1, 2))</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">::: {.cell-output-display} <img data-src="presentation_files/figure-revealjs/unnamed-chunk-6-1.png" width="960"> :::</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;"><code>{.r .cell-code} par(mfrow = c(1, 1))</code> :::</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">## What to Check</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">| Assumption | Plot | What to look for | |—|—|—| | Linearity | Residuals vs.&nbsp;Fitted | No pattern — flat line | | Homoscedasticity | Residuals vs.&nbsp;Fitted | Consistent spread | | Normality | Q-Q Plot | Points on diagonal | | Independence | Study design | Random sample |</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;"># Student Exercise {background-color=“#1A252F”}</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">## Your Turn (10 Minutes)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">::: {.cell}</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">```{.r .cell-code} # Load data data(mtcars)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;"># Task 1: Fit a regression — predict mpg from horsepower only model_hp &lt;- lm(mpg ~ hp, data = mtcars)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;"># Task 2: Get summary summary(model_hp)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;"># Task 3: Make a coefficient plot using broom + ggplot2 library(broom) results_hp &lt;- tidy(model_hp, conf.int = TRUE)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;"># Task 4: Write one APA-style sentence describing the hp coefficient # Hint: “Horsepower was a significant predictor of fuel efficiency…” ``` :::</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">::: {.callout-note} See the <strong>handout</strong> for worked examples, APA table templates, and diagnostic plots. :::</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;"># Wrap-Up {background-color=“#2C3E50”}</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">## Key Takeaways</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">::: incremental 1. <strong>Tables</strong> (stargazer) — for academic/formal reporting 2. <strong>Coefficient plots</strong> — for presentations and general audiences 3. <strong>Prediction tables</strong> — for business decisions and stakeholders 4. <strong>Check assumptions</strong> — before reporting anything 5. <strong>APA style</strong> — exact p-values, italics, CIs always 6. <strong>Context</strong> — numbers do not speak for themselves :::</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">## Resources</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">- See the <strong>handout.qmd</strong> for full APA write-up template - <span class="citation" data-cites="james2013">James et al. (<a href="#/test-workflow-trigger---github-actions-will-auto-render-this-file" role="doc-biblioref" onclick="">2013</a>)</span> — Introduction to Statistical Learning - <span class="citation" data-cites="wickham2019">Wickham (<a href="#/test-workflow-trigger---github-actions-will-auto-render-this-file" role="doc-biblioref" onclick="">2019</a>)</span> — ggplot2 / tidyverse reference - <span class="citation" data-cites="fox2011">Fox (<a href="#/test-workflow-trigger---github-actions-will-auto-render-this-file" role="doc-biblioref" onclick="">2011</a>)</span> — R Companion to Applied Regression - <span class="citation" data-cites="r2024">R Core Team (<a href="#/test-workflow-trigger---github-actions-will-auto-render-this-file" role="doc-biblioref" onclick="">2024</a>)</span> — R language documentation</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">## Thank You! {background-color=“#2C3E50”}</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;"><strong>Questions?</strong></td>
 </tr>
 </tbody>
