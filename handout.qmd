@@ -1,0 +1,138 @@
+---
+title: "Presenting Regression Results Using R"
+author: "Mohammed"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+format: pdf
+bibliography: references.bib
+csl: apa.csl
+---
+
+# Introduction
+
+Regression analysis is a fundamental statistical technique used in business and research to understand relationships between variables. However, running a regression is only half the battle—presenting the results clearly and accurately is equally important. This handout covers best practices for presenting regression results using R, focusing on clear interpretation, appropriate visualizations, and professional reporting standards.
+
+# Understanding Regression Results
+
+## The Regression Model
+
+Linear regression examines how one variable (the outcome) depends on other variables (predictors). The basic equation is:
+
+$$Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \epsilon$$
+
+Where:
+- $Y$ is the outcome variable
+- $\beta_0$ is the intercept
+- $\beta_1, \beta_2$ are coefficients (how much Y changes per unit of X)
+- $\epsilon$ is the error term
+
+## Key Statistics to Report
+
+**Coefficients**: How much does Y change when X increases by one unit?
+
+**P-values**: Is the effect real or due to chance? If p < 0.05, the effect is statistically significant.
+
+**R²**: What percentage of variation in Y is explained by the model? Range: 0 to 1.
+
+**Standard Error**: Uncertainty around each coefficient estimate.
+
+# Presenting Regression Results in R
+
+## Method 1: The Summary Table
+
+The `summary()` function gives basic output. For professional presentation, use the `stargazer` package:
+
+```{r}
+#| echo: true
+#| message: false
+
+library(tidyverse)
+library(stargazer)
+library(broom)
+
+# Load example data
+data(mtcars)
+
+# Fit regression model
+model1 <- lm(mpg ~ wt + cyl, data = mtcars)
+
+# Professional table
+stargazer(model1, type = "text",
+          title = "Regression Results: Fuel Efficiency",
+          summary.stat = c("n", "mean", "sd"))
+```
+
+## Method 2: Visualization
+
+Charts are often more intuitive than tables. Visualize coefficients and their uncertainty:
+
+```{r}
+#| echo: true
+#| message: false
+
+# Extract results in tidy format
+results <- tidy(model1, conf.int = TRUE)
+
+# Plot coefficients
+ggplot(results %>% filter(term != "(Intercept)"),
+       aes(y = term, x = estimate)) +
+  geom_point(size = 3) +
+  geom_errorbar(aes(xmin = conf.low, xmax = conf.high),
+                width = 0.2) +
+  labs(title = "Regression Coefficients with 95% CI",
+       x = "Coefficient Estimate",
+       y = "Variable") +
+  theme_minimal()
+```
+
+## Method 3: Predicted Values
+
+Show what the model predicts for different input values:
+
+```{r}
+#| echo: true
+
+# Create scenario: different weights
+scenarios <- tibble(wt = c(2, 3, 4, 5), cyl = 6)
+
+# Get predictions
+predictions <- predict(model1, newdata = scenarios,
+                       se.fit = TRUE)
+
+scenarios %>%
+  mutate(
+    predicted_mpg = predictions$fit,
+    se = predictions$se.fit,
+    ci_lower = predicted_mpg - 1.96 * se,
+    ci_upper = predicted_mpg + 1.96 * se
+  ) %>%
+  knitr::kable(digits = 2, caption = "Predicted MPG by Weight and Cylinders")
+```
+
+# Key Takeaways for Presentation
+
+1. **Know your audience**: Non-technical audiences prefer charts; academic audiences need tables.
+2. **Report uncertainty**: Always show confidence intervals or standard errors, not just point estimates.
+3. **Check assumptions**: Validate that regression assumptions hold before reporting.
+4. **Interpret in context**: Explain what numbers mean for the business question.
+5. **Avoid common mistakes**: Don't confuse correlation with causation; acknowledge limitations.
+
+# References
+
+::: {#refs}
+:::
+
+---
+
+\newpage
+
+# Affidavit
+
+I hereby affirm that this submitted paper was authored unaided and solely by me. Additionally, no other sources than those in the reference list were used. Parts of this paper, including tables and figures, that have been taken either verbatim or analogously from other works have in each case been properly cited with regard to their origin and authorship. This paper either in parts or in its entirety, be it in the same or similar form, has not been submitted to any other examination board and has not been published.
+
+I acknowledge that the university may use plagiarism detection software to check my work. I agree to cooperate with any investigation of suspected plagiarism.
+
+**Mohammed**
+
+**Date**: `r format(Sys.time(), '%d %B %Y')`
+
+**Place**: ________________

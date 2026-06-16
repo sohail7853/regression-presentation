@@ -1,0 +1,208 @@
+---
+title: "Presenting Regression Results Using R"
+author: "Mohammed"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+format: revealjs
+---
+
+# Presenting Regression Results Using R
+
+## Today's Goal
+
+Learn how to present regression results professionally using R
+
+**Why this matters:**
+- Running a regression ≠ presenting it well
+- Good presentation = better understanding
+- Different formats for different audiences
+
+# What is Regression?
+
+## The Big Picture
+
+Regression answers: **How does X affect Y?**
+
+Example:
+- Does **weight** affect **fuel efficiency**?
+- Does **experience** affect **salary**?
+- Does **price** affect **sales**?
+
+## The Simple Equation
+
+$$Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \epsilon$$
+
+- $Y$ = outcome (what we want to predict)
+- $X$ = predictor (what influences the outcome)
+- $\beta$ = effect size (how much X affects Y)
+
+# Regression in 60 Seconds
+
+## The Code
+
+```{r}
+#| echo: true
+#| eval: false
+
+# Step 1: Load data
+data(mtcars)
+
+# Step 2: Fit model
+model <- lm(mpg ~ wt + cyl, data = mtcars)
+
+# Step 3: See results
+summary(model)
+```
+
+## What the Results Mean
+
+- **Coefficient for `wt`** = -3.2: Each additional 1000 lbs → -3.2 mpg (fuel gets worse)
+- **P-value** = 0.0001: This effect is real (not by chance)
+- **R² = 0.83**: The model explains 83% of fuel efficiency variation
+
+# Presenting Results: Option 1 - Tables
+
+## Publication Table
+
+```{r}
+#| echo: true
+#| message: false
+
+library(stargazer)
+library(tidyverse)
+
+data(mtcars)
+model1 <- lm(mpg ~ wt + cyl, data = mtcars)
+model2 <- lm(mpg ~ wt + cyl + hp, data = mtcars)
+
+stargazer(model1, model2, type = "text")
+```
+
+**When to use:** Academic papers, formal reports
+
+# Presenting Results: Option 2 - Charts
+
+## Coefficient Plot
+
+```{r}
+#| echo: true
+#| message: false
+
+library(broom)
+
+results <- tidy(model1, conf.int = TRUE)
+
+ggplot(results %>% filter(term != "(Intercept)"),
+       aes(y = term, x = estimate)) +
+  geom_point(size = 3, color = "darkblue") +
+  geom_errorbar(aes(xmin = conf.low, xmax = conf.high),
+                width = 0.2) +
+  geom_vline(xintercept = 0, linetype = "dashed", color = "red") +
+  labs(title = "Effect Sizes with 95% Confidence Intervals",
+       x = "Coefficient", y = "") +
+  theme_minimal()
+```
+
+**When to use:** Presentations to non-technical audiences
+
+# Presenting Results: Option 3 - Predictions
+
+## Show Real-World Impact
+
+```{r}
+#| echo: true
+#| message: false
+
+scenarios <- tibble(wt = c(2.5, 3, 3.5, 4), cyl = 6)
+pred <- predict(model1, newdata = scenarios, se.fit = TRUE)
+
+scenarios %>%
+  mutate(
+    mpg = round(pred$fit, 1),
+    ci = paste0("[", round(pred$fit - 1.96*pred$se.fit, 1),
+                ", ", round(pred$fit + 1.96*pred$se.fit, 1), "]")
+  ) %>%
+  select(wt, cyl, mpg, ci) %>%
+  knitr::kable(
+    col.names = c("Weight (1000 lbs)", "Cylinders", "Predicted MPG", "95% CI")
+  )
+```
+
+**When to use:** Business presentations, stakeholders
+
+# Best Practices
+
+## 1. Know Your Audience
+
+| Audience | Format | Focus |
+|----------|--------|-------|
+| Statisticians | Tables, detailed statistics | Coefficients, p-values, R² |
+| Business | Charts, scenarios | Real-world impact, predictions |
+| General public | Simple visuals | "What does this mean for me?" |
+
+## 2. Always Show Uncertainty
+
+Don't just say: "The effect is 3.2"
+
+Say: "The effect is 3.2 (95% CI: 2.1 to 4.3)"
+
+## 3. Validate Assumptions
+
+Before presenting, check:
+- Linearity (is the relationship linear?)
+- Independence (are observations independent?)
+- Normality (are residuals normally distributed?)
+
+## 4. Interpret in Context
+
+**Bad:** "The coefficient is -3.2, p = 0.0001"
+
+**Good:** "Each additional 1000 lbs of weight reduces fuel efficiency by 3.2 miles per gallon, a highly significant effect"
+
+## 5. Avoid Common Mistakes
+
+- ❌ Correlation = Causation
+- ❌ Forgetting to mention sample size
+- ❌ Ignoring outliers
+- ❌ Over-interpreting small effects
+
+# Your Turn: Student Exercise
+
+## Exercise (10 minutes)
+
+```{r}
+#| echo: true
+#| eval: false
+
+# Load data
+data(mtcars)
+
+# Task 1: Fit a regression model
+# Predict: mpg ~ hp (horsepower)
+model <- lm(mpg ~ hp, data = mtcars)
+
+# Task 2: Get summary
+summary(model)
+
+# Task 3: Interpret
+# Q1: Does horsepower affect fuel efficiency?
+# Q2: What is the effect size?
+# Q3: Is it statistically significant?
+```
+
+**You have 10 minutes. Go!**
+
+# Wrap-Up
+
+## Key Takeaways
+
+1. **Regression** = understand relationships between variables
+2. **Tables** = detailed, formal
+3. **Charts** = intuitive, accessible
+4. **Predictions** = real-world impact
+5. **Context** = numbers don't speak for themselves
+
+---
+
+## Thank You!
+
+**Questions?**
