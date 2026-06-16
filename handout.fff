@@ -1,0 +1,34 @@
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+[H]
+
+\caption{\label{fig-coefplot}Regression coefficients with 95\%
+confidence intervals for Model 1 predicting fuel efficiency. The dashed
+red line represents zero effect. Coefficients whose intervals do not
+cross zero are statistically significant at alpha = .05.}
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{handout_files/figure-pdf/fig-coefplot-1.pdf}}
+
+}
+
+\end{figure*}
+\efloatseparator
+ 
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+[H]
+
+\caption{\label{fig-diagnostics}Regression diagnostic plots for Model 1.
+Panel A shows residuals vs.~fitted values (checking linearity and
+homoscedasticity). Panel B shows a Normal Q-Q plot (checking normality
+of residuals).}
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{handout_files/figure-pdf/fig-diagnostics-1.pdf}}
+
+}
+
+\end{figure*}

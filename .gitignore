@@ -1,0 +1,18 @@
+# Quarto generated output
+.quarto/
+_site/
+*_cache/
+*.freeze/
+*.ttt
+
+# R environment
+.Rhistory
+.Rdata
+.Ruserdata
+
+# OS files
+.DS_Store
+Thumbs.db
+
+/.quarto/
+**/*.quarto_ipynb

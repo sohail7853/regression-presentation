@@ -1,0 +1,345 @@
+---
+title: "Presenting Regression Results Using R"
+subtitle: "Best Practices for Statistical Communication"
+
+author: |
+  Mohammed Sohail
+  Graduate School of Business, Hochschule Fresenius
+  Matriculation No. 401080440
+  sohail7853@gmail.com
+
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+
+format:
+  revealjs:
+    theme: simple
+    slide-number: true
+    progress: true
+    chalkboard: false
+    footer: "Presenting Regression Results Using R | Mohammed Sohail"
+    transition: slide
+    highlight-style: github
+    code-fold: false
+    fig-align: center
+
+bibliography: references.bib
+csl: apa.csl
+---
+
+```{r}
+#| label: setup
+#| include: false
+library(tidyverse)
+library(stargazer)
+library(broom)
+library(knitr)
+
+data(mtcars)
+model1 <- lm(mpg ~ wt + cyl, data = mtcars)
+model2 <- lm(mpg ~ wt + cyl + hp, data = mtcars)
+```
+
+# Presenting Regression Results Using R {background-color="#2C3E50"}
+
+## Session Overview
+
+By the end of this session, you will be able to:
+
+::: incremental
+- Interpret regression output from R correctly
+- Produce **professional tables** using `stargazer`
+- Create **coefficient plots** with `ggplot2`
+- Build **prediction tables** from model output
+- Follow **APA 7th edition** reporting conventions
+:::
+
+::: {.notes}
+Welcome everyone. Today we focus not just on running regression but on presenting results in a way that is credible, clear, and follows disciplinary standards.
+:::
+
+# Part 1: What is Regression? {background-color="#34495E"}
+
+## The Big Question
+
+Regression answers: **How does X affect Y?**
+
+| Research Question | Outcome (Y) | Predictor (X) |
+|---|---|---|
+| Does weight affect fuel efficiency? | MPG | Weight (lbs) |
+| Does study time affect exam score? | Score | Hours studied |
+| Does price affect sales volume? | Units sold | Price |
+
+::: {.notes}
+Give a real-world example from the students' field of study. The mtcars dataset is our running example throughout.
+:::
+
+## The Regression Equation
+
+$$Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \epsilon$$
+
+- $Y$ = **outcome** (what we want to predict)
+- $\beta_0$ = **intercept** (value of Y when all X = 0)
+- $\beta_1, \beta_2$ = **slope coefficients** (effect of each X on Y)
+- $\epsilon$ = **error** (unexplained variation)
+
+> The coefficients are the story. Everything else supports them.
+
+## What Statistics to Report (APA Style)
+
+| Statistic | What it tells you | APA notation |
+|---|---|---|
+| Coefficient ($\hat{\beta}$) | Direction and size of effect | $\hat{\beta}$ = -3.19 |
+| Standard Error | Precision of estimate | *SE* = 0.74 |
+| t-statistic | Signal-to-noise ratio | *t*(29) = -4.32 |
+| p-value | Probability under null | *p* < .001 |
+| 95% CI | Range of plausible values | [-4.69, -1.69] |
+| R² | Total variance explained | *R*² = .83 |
+
+# Part 2: Running the Model {background-color="#34495E"}
+
+## The Code (3 Steps)
+
+```{r}
+#| echo: true
+#| eval: false
+
+# Step 1: Load data
+data(mtcars)
+
+# Step 2: Fit the regression model
+model1 <- lm(mpg ~ wt + cyl, data = mtcars)
+
+# Step 3: View results
+summary(model1)
+```
+
+## Reading the Output
+
+```{r}
+#| echo: false
+#| message: false
+
+summary(model1)$coefficients |>
+  as.data.frame() |>
+  round(3) |>
+  knitr::kable(col.names = c("Estimate", "Std. Error", "t value", "Pr(>|t|)"))
+```
+
+::: {.callout-tip}
+**Key numbers**: Estimate = effect size | Pr(>|t|) = p-value | Look for p < .05
+:::
+
+# Part 3: Professional Tables {background-color="#34495E"}
+
+## Why Not Just Use `summary()`?
+
+::: columns
+::: {.column width="50%"}
+**summary() output**
+- Designed for diagnostics
+- Not publication-ready
+- No standard error clarity
+- Hard to compare models
+:::
+
+::: {.column width="50%"}
+**stargazer output**
+- APA-compatible layout
+- Side-by-side model comparison
+- Clear notation
+- Export to LaTeX / text
+:::
+:::
+
+## Building a Stargazer Table
+
+```{r}
+#| echo: true
+#| message: false
+#| results: asis
+
+stargazer(
+  model1, model2,
+  type = "text",
+  dep.var.labels = "Miles per Gallon",
+  covariate.labels = c("Weight (1000 lbs)", "Cylinders", "Horsepower"),
+  column.labels = c("Model 1", "Model 2"),
+  keep.stat = c("n", "rsq", "adj.rsq", "f"),
+  star.cutoffs = c(.05, .01, .001)
+)
+```
+
+## Interpreting the Table
+
+::: incremental
+- **Weight** ($\hat{\beta}$ = -3.19, *p* < .001): Each additional 1,000 lbs reduces fuel efficiency by 3.19 mpg
+- **Cylinders** ($\hat{\beta}$ = -1.51, *p* < .001): Each additional cylinder reduces efficiency by 1.51 mpg
+- **R² = .83**: The model explains 83% of variation in fuel efficiency
+- **Model 2 vs. Model 1**: Adding Horsepower provides minimal improvement ($\Delta R^2$ = .01)
+:::
+
+# Part 4: Coefficient Plots {background-color="#34495E"}
+
+## Why Visualize Coefficients?
+
+> "A coefficient plot shows what a regression table shows, but faster."
+
+- Audiences can immediately see **direction** and **magnitude**
+- Confidence intervals become visual — easy to judge significance
+- Works for papers, reports, and presentations
+
+## The Plot
+
+```{r}
+#| echo: true
+#| message: false
+#| fig-height: 3.5
+
+results <- tidy(model1, conf.int = TRUE) %>%
+  filter(term != "(Intercept)") %>%
+  mutate(term = recode(term, "wt" = "Weight (1000 lbs)", "cyl" = "Cylinders"))
+
+ggplot(results, aes(y = term, x = estimate)) +
+  geom_point(size = 3, color = "#2C3E50") +
+  geom_errorbar(aes(xmin = conf.low, xmax = conf.high), width = 0.2, color = "#2C3E50") +
+  geom_vline(xintercept = 0, linetype = "dashed", color = "#E74C3C") +
+  labs(x = "Coefficient Estimate", y = NULL,
+       caption = "Error bars = 95% CI. Dashed line = zero effect.") +
+  theme_minimal(base_size = 14)
+```
+
+# Part 5: Prediction Tables {background-color="#34495E"}
+
+## Translating Results to Decisions
+
+Prediction tables answer: **"What does the model predict for specific scenarios?"**
+
+Useful for:
+- Business presentations
+- Policy recommendations
+- Communicating to non-statisticians
+
+## Building a Prediction Table
+
+```{r}
+#| echo: true
+#| message: false
+#| html-math-method: plain
+
+scenarios <- tibble(wt = c(2.0, 2.5, 3.0, 3.5, 4.0), cyl = 6)
+pred_out  <- predict(model1, newdata = scenarios, se.fit = TRUE)
+
+scenarios %>%
+  mutate(
+    `Predicted MPG` = round(pred_out$fit, 1),
+    `95% CI`        = paste0(
+      "[", round(pred_out$fit - 1.96 * pred_out$se.fit, 1),
+      ", ", round(pred_out$fit + 1.96 * pred_out$se.fit, 1), "]"
+    )
+  ) %>%
+  rename(`Weight (1000 lbs)` = wt, Cylinders = cyl) %>%
+  knitr::kable()
+```
+
+# Part 6: APA Reporting {background-color="#34495E"}
+
+## Writing Up Results in Text
+
+> A multiple linear regression was conducted predicting fuel efficiency from vehicle weight and cylinder count. The model was significant, *F*(2, 29) = 69.03, *p* < .001, *R*² = .83. Vehicle weight was a significant negative predictor ($\hat{\beta}$ = -3.19, *SE* = 0.74, *t*(29) = -4.32, *p* < .001, 95% CI [-4.69, -1.69]).
+
+## APA Formatting Quick Reference
+
+| Do this | Not this |
+|---|---|
+| *p* = .041 | p < 0.05 |
+| *R*² = .83 | R2 = 0.83 |
+| 95% CI [2.1, 4.3] | CI: 2.1-4.3 |
+| *F*(2, 29) = 69.03 | F = 69 |
+| *M* = 20.09, *SD* = 6.03 | Mean = 20 |
+
+# Part 7: Check Assumptions {background-color="#34495E"}
+
+## Before You Report: Diagnostics
+
+```{r}
+#| echo: true
+#| fig-height: 3.5
+
+par(mfrow = c(1, 2))
+plot(model1, which = c(1, 2))
+par(mfrow = c(1, 1))
+```
+
+## What to Check
+
+| Assumption | Plot | What to look for |
+|---|---|---|
+| Linearity | Residuals vs. Fitted | No pattern — flat line |
+| Homoscedasticity | Residuals vs. Fitted | Consistent spread |
+| Normality | Q-Q Plot | Points on diagonal |
+| Independence | Study design | Random sample |
+
+# Student Exercise {background-color="#1A252F"}
+
+## Your Turn (10 Minutes)
+
+```{r}
+#| echo: true
+#| eval: false
+
+# Load data
+data(mtcars)
+
+# Task 1: Fit a regression — predict mpg from horsepower only
+model_hp <- lm(mpg ~ hp, data = mtcars)
+
+# Task 2: Get summary
+summary(model_hp)
+
+# Task 3: Make a coefficient plot using broom + ggplot2
+library(broom)
+results_hp <- tidy(model_hp, conf.int = TRUE)
+
+# Task 4: Write one APA-style sentence describing the hp coefficient
+# Hint: "Horsepower was a significant predictor of fuel efficiency..."
+```
+
+::: {.callout-note}
+See the **handout** for worked examples, APA table templates, and diagnostic plots.
+:::
+
+# Wrap-Up {background-color="#2C3E50"}
+
+## Key Takeaways
+
+::: incremental
+1. **Tables** (stargazer) — for academic/formal reporting
+2. **Coefficient plots** — for presentations and general audiences
+3. **Prediction tables** — for business decisions and stakeholders
+4. **Check assumptions** — before reporting anything
+5. **APA style** — exact p-values, italics, CIs always
+6. **Context** — numbers do not speak for themselves
+:::
+
+## Resources
+
+- See the **handout.qmd** for full APA write-up template
+- @james2013 — Introduction to Statistical Learning
+- @wickham2019 — ggplot2 / tidyverse reference
+- @fox2011 — R Companion to Applied Regression
+- @r2024 — R language documentation
+
+## Thank You! {background-color="#2C3E50"}
+
+**Questions?**
+
+---
+
+*Slides and handout available in the course repository.*
+
+# References {.unnumbered}
+
+# Test workflow trigger - GitHub Actions will auto-render this file
+
+::: {#refs}
+:::

@@ -1,0 +1,8 @@
+project:
+  type: default
+
+execute:
+  freeze: auto
+
+bibliography: references.bib
+csl: apa.csl

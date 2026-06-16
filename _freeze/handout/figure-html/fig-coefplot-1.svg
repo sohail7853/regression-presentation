@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='468.00pt' height='468.00pt' viewBox='0 0 468.00 468.00'>
+<g class='svglite'>
+<defs>
+  <style type='text/css'><![CDATA[
+    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+    .svglite text {
+      white-space: pre;
+    }
+    .svglite g.glyphgroup path {
+      fill: inherit;
+      stroke: none;
+    }
+  ]]></style>
+</defs>
+<rect width='100%' height='100%' style='stroke: none; fill: #FFFFFF;'/>
+<defs>
+  <clipPath id='cpMC4wMHw0NjguMDB8MC4wMHw0NjguMDA='>
+    <rect x='0.00' y='0.00' width='468.00' height='468.00' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpMC4wMHw0NjguMDB8MC4wMHw0NjguMDA=)'>
+<rect x='0.00' y='-0.00000000000011' width='468.00' height='468.00' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+</g>
+<defs>
+  <clipPath id='cpNzkuMTV8NDYyLjUyfDM4Ljg1fDQyMi44Nw=='>
+    <rect x='79.15' y='38.85' width='383.38' height='384.02' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpNzkuMTV8NDYyLjUyfDM4Ljg1fDQyMi44Nw==)'>
+<polyline points='114.15,422.87 114.15,38.85 ' style='stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;' />
+<polyline points='187.69,422.87 187.69,38.85 ' style='stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;' />
+<polyline points='261.24,422.87 261.24,38.85 ' style='stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;' />
+<polyline points='334.78,422.87 334.78,38.85 ' style='stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;' />
+<polyline points='408.32,422.87 408.32,38.85 ' style='stroke-width: 0.53; stroke: #EBEBEB; stroke-linecap: butt;' />
+<polyline points='79.15,318.14 462.52,318.14 ' style='stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;' />
+<polyline points='79.15,143.59 462.52,143.59 ' style='stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;' />
+<polyline points='150.92,422.87 150.92,38.85 ' style='stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;' />
+<polyline points='224.46,422.87 224.46,38.85 ' style='stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;' />
+<polyline points='298.01,422.87 298.01,38.85 ' style='stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;' />
+<polyline points='371.55,422.87 371.55,38.85 ' style='stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;' />
+<polyline points='445.09,422.87 445.09,38.85 ' style='stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;' />
+<circle cx='210.42' cy='143.59' r='3.56' style='stroke-width: 0.71; stroke: #2C3E50; fill: #2C3E50;' />
+<circle cx='334.21' cy='318.14' r='3.56' style='stroke-width: 0.71; stroke: #2C3E50; fill: #2C3E50;' />
+<polyline points='324.27,161.04 324.27,126.13 ' style='stroke-width: 1.07; stroke: #2C3E50; stroke-linecap: butt;' />
+<polyline points='324.27,143.59 96.57,143.59 ' style='stroke-width: 1.07; stroke: #2C3E50; stroke-linecap: butt;' />
+<polyline points='96.57,161.04 96.57,126.13 ' style='stroke-width: 1.07; stroke: #2C3E50; stroke-linecap: butt;' />
+<polyline points='396.58,335.60 396.58,300.69 ' style='stroke-width: 1.07; stroke: #2C3E50; stroke-linecap: butt;' />
+<polyline points='396.58,318.14 271.83,318.14 ' style='stroke-width: 1.07; stroke: #2C3E50; stroke-linecap: butt;' />
+<polyline points='271.83,335.60 271.83,300.69 ' style='stroke-width: 1.07; stroke: #2C3E50; stroke-linecap: butt;' />
+<line x1='445.09' y1='422.87' x2='445.09' y2='38.85' style='stroke-width: 1.07; stroke: #E74C3C; stroke-dasharray: 5.69,5.69; stroke-linecap: butt;' />
+</g>
+<g clip-path='url(#cpMC4wMHw0NjguMDB8MC4wMHw0NjguMDA=)'>
+<text x='74.21' y='321.29' text-anchor='end' style='font-size: 8.80px;fill: #4D4D4D; font-family: "Arial";' textLength='36.67px' lengthAdjust='spacingAndGlyphs'>Cylinders</text>
+<text x='74.21' y='146.74' text-anchor='end' style='font-size: 8.80px;fill: #4D4D4D; font-family: "Arial";' textLength='68.73px' lengthAdjust='spacingAndGlyphs'>Weight (1000 lbs)</text>
+<text x='150.92' y='434.11' text-anchor='middle' style='font-size: 8.80px;fill: #4D4D4D; font-family: "Arial";' textLength='7.81px' lengthAdjust='spacingAndGlyphs'>-4</text>
+<text x='224.46' y='434.11' text-anchor='middle' style='font-size: 8.80px;fill: #4D4D4D; font-family: "Arial";' textLength='7.81px' lengthAdjust='spacingAndGlyphs'>-3</text>
+<text x='298.01' y='434.11' text-anchor='middle' style='font-size: 8.80px;fill: #4D4D4D; font-family: "Arial";' textLength='7.81px' lengthAdjust='spacingAndGlyphs'>-2</text>
+<text x='371.55' y='434.11' text-anchor='middle' style='font-size: 8.80px;fill: #4D4D4D; font-family: "Arial";' textLength='7.81px' lengthAdjust='spacingAndGlyphs'>-1</text>
+<text x='445.09' y='434.11' text-anchor='middle' style='font-size: 8.80px;fill: #4D4D4D; font-family: "Arial";' textLength='4.89px' lengthAdjust='spacingAndGlyphs'>0</text>
+<text x='270.83' y='446.57' text-anchor='middle' style='font-size: 11.00px; font-family: "Arial";' textLength='177.83px' lengthAdjust='spacingAndGlyphs'>Unstandardized Coefficient Estimate</text>
+<text x='79.15' y='31.05' style='font-size: 11.00px; font-family: "Arial";' textLength='267.14px' lengthAdjust='spacingAndGlyphs'>Regression Coefficients with 95% Confidence Intervals</text>
+<text x='79.15' y='14.93' style='font-size: 13.20px; font-family: "Arial";' textLength='48.36px' lengthAdjust='spacingAndGlyphs'>Figure 1</text>
+<text x='462.52' y='460.67' text-anchor='end' style='font-size: 8.80px; font-family: "Arial";' textLength='340.38px' lengthAdjust='spacingAndGlyphs'>Note. Model predicting miles per gallon from vehicle weight and cylinder count (N = 32).</text>
+</g>
+</g>
+</svg>
